@@ -42,6 +42,10 @@ contract ZombieFactory {
     }
 
     function createRandomZombie(string memory _name) public {
+        // require termina a execução e retorna um erro se a condição
+        // não for verdadeira
+        require(ownerZombieCount[msg.sender] == 0);
+
         uint randDna = _generateRandomDna(_name);
         _createZombie(_name, randDna);
     }
