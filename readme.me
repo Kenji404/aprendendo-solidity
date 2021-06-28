@@ -312,3 +312,84 @@
                 // se hash _name for igual ao hash "Vitalik", proceder com a função:
                 return "Hi Vitalik!";
             }
+
+
+
+20. O que é herança?
+    Para facilitar a programação e leitura dos smart contracts o Solidity
+    oferece a possibilidade de dividr o código-fonte em múltiplos contratos
+    para melhorar a organização, ao invés de desenvolvê-lo em um único
+    contrato.
+        Ex: 
+        contract Doge {
+            function catchphrase() public returns (string memory) {
+                return "Who said Doge?";
+            }
+        }
+
+        contract BabyDoge is Doge {
+            function anotherCatchphrase() public returns (string memory) {
+                return "To The Moooon, Doge!";
+            }
+        }
+
+
+
+21. O que é import?
+    Em Solidity é possível dividir o contrato em múltiplos contratos através
+    da herança (Cap.20) com a totalidade do código-fonte em um único arquivo,
+    no entanto o import oferece a possibilidade de importar contratos e 
+    dividi-los em múltiplos arquivos do código-fonte.
+        Ex:
+                pragma solidity ^0.6.0;
+
+                // importa o contrato "OtherContract.sol"
+                import "./OtherContract.sol";
+
+                // define a herança entre os contratos MyContract sob OtherContract 
+                contract MyContract is OtherContract {
+                    
+                }
+
+
+22. Storage vs. Memory?
+    Em Solidity existem dois locais onde você pode armazenar as variáveis - 
+    em Storage e em Memory.
+    
+        - Storage: se refere aos dados inseridos permanentemente na blockchain
+
+        - Memory: se refere aos dados que são descartados após a execução
+        da função.
+
+    Nota: Pense em Storage como o disco-rígido (HD) de um computador e 
+          Memory como a memória RAM.
+
+    O default do Ethereum é definir as State variables, que são definidas
+    fora do escopo de função (globais), como Storage e registradas
+    permanentemente na Blockchain, enquanto as variáveis definidas dentro
+    do escopo de funções são definidas como Memory e desaparecem após
+    o término da execução da função.
+        Ex:
+            contract SandwichFactory {
+                struct Sandwich {
+                    string name;
+                    string status;
+                }
+
+                // array dinâmico para inserção de structs em um array
+                Sandwich[] sandwiches;
+
+                function eatSandwich(uint _index) public {
+
+                    Sandwich storage mySandwich = sandwiches[_index];
+                    mySandwich.status = "Eaten!";
+
+                    Sandwich memory anotherSandwich = sandwiches[_index + 1];
+                    anotherSandwich.status = "Eaten too!";
+                    sandwiches[_index + 1] = anotherSandwich;
+                }
+            }
+
+
+
+.
